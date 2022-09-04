@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+    h1 {
+        @apply text-2xl font-semibold mb-2;
+    }
     .card {
         @apply bg-white rounded-lg border border-gray-200 px-4 sm:px-12 py-4 sm:py-10 shadow shadow-gray-100;
     }

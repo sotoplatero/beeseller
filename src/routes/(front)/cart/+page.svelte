@@ -1,5 +1,6 @@
 <script>
     import {shop,cart} from '$lib/db'
+    import { srcImg } from '$lib/util'
 	import { enhance } from '$lib/form';
 	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
@@ -22,38 +23,45 @@
         $cart.products = products
     }
 
+    const removeProduct = (idx) => {
+        products.splice( idx, 1 )
+        $cart.products = products
+    }
+
 </script>
 
-<div class="border border-gray-200 overflow-hidden rounded-xl">
-    <table clase="">
-        <!-- <thead>
-            <tr>
-                <th></th>
-                <th>Producto</th>
-                <th class="text-right">Precio</th>
-                <th class="text-right">Cantidad</th>
-                <th class="text-right">T</th>
-            </tr>
-        </thead> -->
-        <tbody>
+<h1>Carrito de Compras</h1>
+<div class="border border-gray-200 overflow-hidden rounded-xl px-12 py-6">
+    {#if $cart.products.length }
+        <ul class="divide-y divide-gray-200">
             {#each $cart.products as product, idx (product.sku)}
-                <tr 
-                    transition:scale|local={{ start: 0.7 }}
-                    animate:flip={{ duration: 200 }}
-                >
-                    <td></td>
-                    <td class="title font-bold uppercase text-sm">
-                        { product.catalogDescrip }
-                    </td>
-                    <td class="percent font-bold text-right whitespace-nowrap">
-                        {product.priceSale}
-                    </td>
-                    <td class="gain text-center">
-                        <div class="flex items-center border w-24 mx-auto bg-white">
+                <li class="flex py-6 " transition:scale|local={{ start: 0.7 }} animate:flip={{ duration: 200 }}>
+
+                    <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                        <img src="{srcImg(product.images[0])}" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center">
+                    </div>
+        
+                    <div class="ml-4 flex-1">
+                        <div>
+                            <div class="text-base font-medium text-gray-900">
+                                <h3>
+                                    <a href="#">{product.catalogDescrip}</a>
+                                </h3>
+                            </div>
+                            <p class="font-medium">
+                                <span class="text-sm text-gray-600">UYU</span> {product.priceSale}
+                            </p>
+                            <p class="mt-1 capitalize text-sm text-gray-400">
+                                {product.categories.join().toLowerCase()}
+                            </p>
+                        </div>
+                    </div>
+        
+                    <div class="flex flex-col flex-1 items-end justify-between text-sm">
+                        <div class="flex items-center border w-24 bg-white">
                             <button on:click={decrement(idx)} class="p-2 border-r-0 font-extrabold bg-gray-100 border-r">-</button>
                             <div  class="grow">
-
-                                <input class="w-full rounded-none p-2 !border-0 text-center"
+                                <input class="w-full rounded-none p-1 !border-0 text-center"
                                     readonly 
                                     type="text" 
                                     name="quantity" 
@@ -61,15 +69,23 @@
                                     bind:value={product.quantity}>
                             </div>
                             <button on:click={increment(idx)} class="p-2 bg-gray-100 font-bold border-l">+</button>
+                        </div>                    
+        
+                        <div class="flex">
+                            <button on:click={removeProduct(idx)} type="button" class="font-medium text-gray-300 hover:text-bee">Remove</button>
                         </div>
-                    </td>
-                    <td class="percent font-bold text-right whitespace-nowrap">
-                        12
-                    </td>
-                </tr>
+                    </div>
+                </li>    
+        
             {/each}
-        </tbody>
-    </table>
+        </ul>
+    {:else}
+        <div class="text-center">
+            <p class="text-2xl">El carrito está vacío</p>
+            <a class="font-bold" href="/{$shop.slug}">Comienza a comprar ahora &rarr;</a>
+
+        </div>
+    {/if}
     
 </div>
 

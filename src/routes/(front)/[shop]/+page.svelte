@@ -6,6 +6,10 @@
 	import { flip } from 'svelte/animate';
 
     let store = $shop
+    let catalog = $shop.catalog
+    let q = ''
+
+    $: products = catalog.filter( el => el.catalogDescrip.toLowerCase().includes( q.toLocaleLowerCase()))
 
     function addToCart(event){
         let product = event.detail
@@ -20,6 +24,8 @@
         }
         $cart.products = products
     }
+
+
 </script>
 
 <svelte:head>
@@ -30,9 +36,13 @@
 
 <!-- Products List -->
 <div class="">
-
-    <ul class="grid grid-cols-4 gap-6">
-	{#each $shop.catalog as product (product.sku)}
+    <div class="flex justify-center mb-4">
+        <div>
+            <input bind:value={q} type="text" >
+        </div>
+    </div>
+    <ul class="grid gid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 justify-center place-content-center ">
+	{#each products as product (product.sku)}
         <li>
             <Product {product}  on:add={addToCart} />
         </li>
