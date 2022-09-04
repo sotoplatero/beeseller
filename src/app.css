@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .card {
+        @apply bg-white rounded-xl border border-gray-200 px-12 py-10;
+    }
+	label{
+		@apply block text-sm font-medium text-gray-700 mb-1;
+	}
+	input {
+		@apply block w-full rounded-md border border-gray-300 px-4 py-3 focus:border-indigo-300 sm:text-sm;
+	}
+    .btn {
+        @apply p-3 px-6 flex items-center font-bold rounded-lg text-sm;       
+    }
+    .btn.primary {
+        @apply bg-bee  hover:bg-yellow-400 text-yellow-700 hover:text-yellow-800
+    }
+    .btn.secondary {
+        @apply bg-white border  hover:bg-stone-200 text-stone-700 hover:text-stone-800
+    }
+    a {
+        @apply text-yellow-600;
+    }
+    table{
+        @apply border-collapse table-auto w-full  ;
+    }
+    tbody, thead {
+        @apply bg-white;
+    }
+    td {
+        @apply border-b border-gray-100 py-3 text-gray-500 first:pl-2 sm:first:pl-8 last:pr-2 sm:last:pr-8;
+    }
+    tr {
+        @apply hover:bg-stone-50 transition;
+    }
+    th { 
+        @apply border-b font-medium py-4 text-gray-600 text-left text-sm first:pl-8 last:pr-8;
+    }
+    h2 {
+        @apply text-2xl flex items-center font-semibold space-x-4 mb-6;
+    }
+}
