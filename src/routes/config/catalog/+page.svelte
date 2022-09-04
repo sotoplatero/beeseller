@@ -1,6 +1,7 @@
 <script>
     import {shop} from '$lib/db'
     import Product from '$lib/components/ProductRow.svelte'
+    import { categories } from '$lib/data'
 	import { enhance } from '$lib/form';
 	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
@@ -10,13 +11,19 @@
 	let percentValue = 10;
     let skuProductsInStore = []
     let products = []
+    let q = ''
+    let pmin = ''
+    let pmax  = ''
 
     // $: console.log($shop.catalog)
     $: skuProductsInStore = $shop.catalog.map(el=>el.sku) || []
 
     $: products = data.products.filter( el => {
-        console.log(skuProductsInStore)
-        return !skuProductsInStore.includes( el.sku )
+        return (
+            !skuProductsInStore.includes( el.sku ) &&
+            el.catalogDescrip.toLowerCase().includes( q.toLocaleLowerCase() ) 
+        )
+
     })
 
 </script>
@@ -32,14 +39,61 @@
 
     
     <!-- Products Table -->
-    <div class="flex">
+    <div class="flex space-x-8">
 
-        <div class="w-64">
+        <div class="w-60 space-y-10">
+
+            <!-- custom search -->
+            <div>
+                <div class="flex items-center mb-4">
+                    <span class="font-bold text-gray-800">Buscar</span>
+                </div>
+                <div>
+                    <input bind:value={q} type="text" placeholder="Texto para buscar">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center mb-4">
+                    <span class="font-bold text-gray-800">Precio</span>
+                </div>
+                <div class="flex space-x-2">
+                    <input bind:value="{pmin}" type="text" placeholder="Mínimo">
+                    <input bind:value="{pmax}" type="text" placeholder="Máximo">
+                    <button class="btn secondary !text-gray-400 px-3 !bg-gray-50">
+                        &raquo;
+                    </button>
+                </div>
+            </div>
+
+            <!-- Categorias -->
+            <div>
+                <div class="flex items-center mb-4">
+                    <span class="font-bold text-gray-800">Categorias</span>
+                </div>
+                <ul class="space-y-2">
+                    {#each categories as {id, description} }
+                        <li>
+                            <div class="flex items-start">
+                                <div class="flex h-5 items-center">
+                                  <input value="{id}" id="Category" name="Category" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                  <label for="Category" class="font-normal text-gray-700">{description}</label>
+                                </div>
+                            </div>                        
+    
+                        </li>
+                    {/each}
+                </ul>
+            </div>
+
+            <!-- price -->
     
         </div>
 
-        <div class="border border-gray-200 overflow-hidden rounded-xl">
 
+        <div class="grow">
             <!-- Toolbar -->
             <div class="flex justify-between mb-2">
                 <div class="">
@@ -60,29 +114,33 @@
                 </div>    
                 <button class="btn secondary">Agregar Todo</button>
             </div>            
-            
-            <table clase="">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th class="text-right">Precio</th>
-                        <th class="text-right">Venta</th>
-                        <th class="text-right">Ganancia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each products as product (product.sku)}
-                        <tr 
-                            class="text-sm"
-                            transition:scale|local={{ start: 0.7 }}
-                            animate:flip={{ duration: 200 }}
-                        >
-                            <Product {product} {percentValue} />
+             
+            <!-- product list -->
+            <div class="border border-gray-200 overflow-hidden rounded-xl">
+                <table clase="">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-right">Precio</th>
+                            <th class="text-right">Venta</th>
+                            <th class="text-right">Ganancia</th>
                         </tr>
-                    {/each}
-                </tbody>
-            </table>
-        
+                    </thead>
+                    <tbody>
+                        {#each products as product (product.sku)}
+                            <tr 
+                                class="text-sm"
+                                transition:scale|local={{ start: 0.7 }}
+                                animate:flip={{ duration: 200 }}
+                            >
+                                <Product {product} {percentValue} />
+                            </tr>
+                        {/each}
+                    </tbody>
+                </table>
+            
+            </div>
+
         </div>
 
     </div>    

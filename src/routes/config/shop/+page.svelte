@@ -35,25 +35,27 @@
 	</div>
 </div>
 
-<!-- Products List -->
-<div class="card mt-12">
-
-	{#each $shop.catalog as product }
-		<ul class="grid grid-cols-4 gap-6">
-			<li>
-				<Product {product} on:click={toggleProduct(product)}/>
-			</li>
-		</ul>
-	{:else}
-		<div class="text-center space-y-4">
-			<p>No tiene productos en el Catalogo</p>
-			<a href="/catalog" class="btn primary mx-auto">
-				<svg class="w-8 h-8 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-					<path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m-6 3.75l3 3m0 0l3-3m-3 3V1.5m6 9h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
-				</svg>
-				<span>Agregar Productos</span>
-			</a>
-		</div>
-	{/each}
-
+<!--  -->
+<div class="mt-12 mb-2">
+	<a href="/config/catalog" class="btn primary w-full sm:w-52 bg-bee">
+		<svg class="w-8 h-8 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+			<path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m-6 3.75l3 3m0 0l3-3m-3 3V1.5m6 9h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
+		</svg>
+		<span>Agregar Productos</span>
+	</a>
 </div>
+
+<!-- Catalog List -->
+{#if $shop.catalog.length }
+	<div class="card">
+
+		{#each $shop.catalog as product }
+			<ul class="grid grid-cols-4 gap-6">
+				<li>
+					<Product {product} on:click={toggleProduct(product)}/>
+				</li>
+			</ul>
+		{/each}
+
+	</div>
+{/if}

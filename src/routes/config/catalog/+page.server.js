@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 
-const size = 25
+const size = 10
 const url = `https://api.landings.bee-seller.com/products_api/products?page=1&pageSize=${size}&country=UY`
 
 export const load = async ({ locals }) => {

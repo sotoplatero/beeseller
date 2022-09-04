@@ -6,14 +6,7 @@
 	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 
-	let title = $shop.name;
-	let percentValue = 10;
 
-	const save = () => {
-        $shop.name = title
-		$shop.slug = title.toLowerCase().replace(' ','-')
-        goto('/shop')
-    }
 
 </script>
 
