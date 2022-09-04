@@ -1,12 +1,15 @@
 <script>
 	import {shop} from '$lib/db'
-	import Product from '$lib/components/Product.svelte'
 	import { enhance } from '$lib/form';
 	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 
+	$: catalog = $shop.catalog
 
-
+	const removeProduct = (i) => {
+		catalog.splice(i,1)
+		$shop.catalog = catalog
+	}
 </script>
 
 <svelte:head>
@@ -46,16 +49,41 @@
 </div>
 
 <!-- Catalog List -->
-{#if $shop.catalog.length }
-	<div class="card">
-
-		{#each $shop.catalog as product }
-			<ul class="grid grid-cols-4 gap-6">
-				<li>
-					<Product {product} on:click={toggleProduct(product)}/>
-				</li>
-			</ul>
-		{/each}
-
+{#if catalog.length }
+	<div class="border border-gray-200 overflow-hidden rounded-xl">
+		<table class="">
+			<thead>
+				<tr>
+					<th></th>
+					<th class="text-right">Precio</th>
+					<th class="text-right">Venta</th>
+					<th class="text-right">Ganancia</th>
+					<th></th>
+				</tr>
+			</thead>			
+			<tbody>
+				{#each catalog as product, i (product.sku)}
+				<tr class="" transition:scale|local={{ start: 0.7 }} animate:flip={{ duration: 200 }}>
+					<td class="grow title font-bold uppercase text-xs sm:text-sm">
+						{ product.catalogDescrip }
+					</td>
+					<td class="price text-right">
+						{ product.pricePesos }
+					</td>
+					<td class="price-sale font-bold text-right">
+						{ product.priceSale }
+					</td>
+					<td class="gain text-right">
+						<span class="bg-green-100 text-green-600 text-sm font-bold p-1 px-2 rounded ">
+							{ Math.round(( product.priceSale - product.pricePesos ) * 0.75 ) }
+						</span>
+					</td>
+					<td class="text-right">
+						<button on:click={removeProduct(i)} class="btn secondary ml-auto p-2 rounded">&times;</button>
+					</td>
+				</tr>
+				{/each}
+			</tbody>
+		</table>
 	</div>
 {/if}

@@ -14,25 +14,38 @@
     let q = ''
     let pmin = ''
     let pmax  = ''
+    const percentGain = 0.75
 
     // $: console.log($shop.catalog)
     $: skuProductsInStore = $shop.catalog.map(el=>el.sku) || []
 
-    $: products = data.products.filter( el => {
-        return (
-            !skuProductsInStore.includes( el.sku ) &&
-            el.catalogDescrip.toLowerCase().includes( q.toLocaleLowerCase() ) 
-        )
+    $: products = data.products
+        .filter( el => {
+            return (
+                !skuProductsInStore.includes( el.sku ) &&
+                el.catalogDescrip.toLowerCase().includes( q.toLocaleLowerCase() ) 
+            )
+        })
+        .map( el => ({
+            ...el,
+            percentValue, 
+            percent: ( percentValue / 100 ) + 1,
+            priceSale: el.pricePesos + Math.round( (percentValue / 100) * el.pricePesos  )          
+        }))
 
-    })
+    const addAll = () => {
+        $shop.catalog = [ ...$shop.catalog, ...products ]
+    }
 
 </script>
 
 <div class="mx-2">
     <h2 class="">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
-          </svg>
+        <a href="/config/shop">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+              </svg>
+        </a>
           
         <span>Agregar Productos</span> 
     </h2>
@@ -112,7 +125,7 @@
                     <input bind:value={percentValue} type="text" name="price" id="price" class="block w-full rounded-md border-gray-300 pl-7 pr-12 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Porciento de ganancia">
                     </div>
                 </div>    
-                <button class="btn secondary">Agregar Todo</button>
+                <button on:click={addAll} class="btn secondary">Agregar Todo</button>
             </div>            
              
             <!-- product list -->
@@ -133,7 +146,7 @@
                                 transition:scale|local={{ start: 0.7 }}
                                 animate:flip={{ duration: 200 }}
                             >
-                                <Product {product} {percentValue} />
+                                <Product bind:product {percentValue} />
                             </tr>
                         {/each}
                     </tbody>

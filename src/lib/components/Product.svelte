@@ -7,15 +7,15 @@
 
 </script>
 
-<div class="flex flex-col w-full h-full border border-gray-100 bg-white rounded-xl overflow-hidden" on:click>
+<div class="flex flex-col w-full h-full border border-gray-100 bg-white rounded-xl overflow-hidden shadow-lg shadow-gray-100" on:click>
     <div class="aspect-square">
-        <!-- <img src="{srcImg(product.images[0])}" alt=""> -->
+        <img src="{srcImg(product.images[0])}" alt="">
     </div>
     <div class="grow pt-2 pb-6 px-8 text-center">
         <div class="font-bold " >
             <span>UYU</span>
             <span>
-                {product.pricePesos}
+                {product.priceSale}
             </span>
         </div>
         <div class="font-bold text-gray-700 text-xs uppercase">
