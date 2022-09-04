@@ -27,12 +27,11 @@
 
 <section class="flex items-center justify-center h-screen">
 	<div  class="w-full max-w-screen-md">
-		<h1>
-			<span class="welcome">
-				<picture class="w-16">
-					<img srcset="/cropped-iso.webp" type="image/webp" alt="Logo de Beseller" class="w-20 mx-auto"/>
-				</picture>
-			</span>
+		<h1 class="text-center text-2xl sm:text-6xl mb-6">
+			<div class="">
+				<img srcset="/cropped-iso.webp" type="image/webp" alt="Logo de Beseller" class="w-24 mx-auto"/>
+			</div>
+			<div>Crea tu tienda <span class="font-bold text-orange-500">Gratis</span></div>
 	
 		</h1>
 	

@@ -1,6 +1,7 @@
 <script>
 	import {shop} from '$lib/db'
-	import { enhance } from '$lib/form';
+	import {onMount} from 'svelte'
+	import {goto} from '$app/navigation'
 	import { scale } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 
@@ -10,6 +11,12 @@
 		catalog.splice(i,1)
 		$shop.catalog = catalog
 	}
+
+	onMount(()=>{
+		if (!$shop.name) {
+			goto('/')
+		}
+	})	
 </script>
 
 <svelte:head>
