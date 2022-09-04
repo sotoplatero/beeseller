@@ -1,12 +1,12 @@
 <script>
 	import {shop} from '$lib/db'
     import {goto} from '$app/navigation'
-	import Product from '$lib/components/Product.svelte'
-	import { enhance } from '$lib/form';
-	import { scale } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
-
-
+	let title = $shop.name
+	const save = () => {
+		$shop.name = title,
+		$shop.slug = title.toLowerCase().replace(/\s+/,'-')
+		goto('/config/shop')
+	}
 
 </script>
 
