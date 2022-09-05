@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { api } from './api';
 
-const size = 25
+const size = 30
 const url = `https://api.landings.bee-seller.com/products_api/products?page=1&pageSize=${size}&country=UY`
 
 export const load = async ({ locals }) => {
@@ -20,9 +20,10 @@ export const load = async ({ locals }) => {
 		data = await response.json()
 
 		return {
-			products: data.products.filter( el => (
-				Array.isArray(el.images) && !!el.images[0]
-			))
+			products: data.products
+			// .filter( el => (
+			// 	Array.isArray(el.images) && !!el.images[0]
+			// ))
 		};
 	}
 

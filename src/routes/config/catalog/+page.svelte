@@ -58,7 +58,7 @@
 
             <!-- custom search -->
             <div>
-                <div class="flex items-center mb-4">
+                <div class="flex items-center mb-2">
                     <span class="font-bold text-gray-800">Buscar</span>
                 </div>
                 <div>
@@ -67,7 +67,7 @@
             </div>
 
             <div>
-                <div class="flex items-center mb-4">
+                <div class="flex items-center mb-2">
                     <span class="font-bold text-gray-800">Precio</span>
                 </div>
                 <div class="flex space-x-2">
@@ -81,7 +81,7 @@
 
             <!-- Categorias -->
             <div>
-                <div class="flex items-center mb-4">
+                <div class="flex items-center mb-2">
                     <span class="font-bold text-gray-800">Categorias</span>
                 </div>
                 <ul class="space-y-2">
@@ -137,6 +137,7 @@
                             <th class="text-right">Precio</th>
                             <th class="text-right">Venta</th>
                             <th class="text-right">Ganancia</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

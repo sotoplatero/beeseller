@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 </script>
 
-<header class="bg-white">
+<header class="bg-white border-b">
 	<div class="w-full max-w-screen-lg mx-auto flex items-center justify-between py-3">
 
 		<div class="">

@@ -3,7 +3,7 @@
 </script>
 <div class="">
 	<Header />
-	<div class="w-full max-w-screen-lg mx-auto py-16">
+	<div class="w-full max-w-screen-lg mx-auto py-12">
 		
 		<main>
 			<slot />

@@ -5,10 +5,10 @@
     const srcImg = (path) => `https://webapi.pepeganga-api.com:8443/landing/image/api/bucket/download-file-from-store-bucket?pathFile=${path}&prefix=medium/`
 
     const percentGain = 0.75
-    // $: percent = ( percentValue /100 ) + 1
+    const addProductToCatalog = () => {
+        $shop.catalog = [ ...$shop.catalog, product  ]
+    }   
 
-    // $: product = { ...product, percentValue, percent, priceSale: Math.round(product.pricePesos * percent) }
-    
 </script>
 
     <td class="grow title font-bold uppercase text-xs sm:text-sm">
@@ -24,6 +24,9 @@
         <span class="bg-green-100 text-green-600 text-sm font-bold p-1 px-2 rounded ">
             { Math.round(( product.priceSale - product.pricePesos ) ) }
         </span>
+    </td>
+    <td class="text-right">
+        <button on:click={addProductToCatalog} class="btn secondary ml-auto p-2 rounded">+</button>
     </td>
 
 
