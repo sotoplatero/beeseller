@@ -13,6 +13,13 @@
 	}
 
 	const updateProduct = (i) => {
+		let product = catalog[i]
+		catalog[i] = {
+			...product,
+			percent: ( product.percentValue / 100 ) + 1,
+			priceSale: product.pricePesos + Math.round( (product.percentValue / 100) * product.pricePesos  )     		
+		}
+		// catalog.splice( i, 1, product )
 		$shop.catalog = catalog
 	}
 
@@ -88,7 +95,7 @@
 						{ product.priceSale }
 					</td>
 					<td class="">
-						<input type="text" bind:value={product.percentValue} on:input={updateProduct(i)} class="w-16 text-center ml-auto">
+						<input type="text" bind:value={product.percentValue} on:input={() => updateProduct(i)} class="w-16 text-center ml-auto">
 					</td>
 					<td class="gain text-right">
 						<span class="bg-green-100 text-green-600 text-sm font-bold p-1 px-2 rounded ">
