@@ -15,7 +15,6 @@ const cart = writable('cart', {
   products: [],
 })
 
-
 const totalItemsInStore = derived(cart, ( $cart ) => {
   return $cart.products.reduce( ( prev, curr ) => prev + curr.quantity, 0)
 })
